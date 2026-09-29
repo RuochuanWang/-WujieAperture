@@ -1,0 +1,30 @@
+# WujieAperture unified dependencies
+# Recommended: Python 3.10
+#
+# For NVIDIA CUDA 12.8, install PyTorch first with:
+#   pip install torch==2.9.0 torchvision==0.24.0 --index-url https://download.pytorch.org/whl/cu128
+
+# Core numerical / vision
+torch>=2.9.0
+torchvision>=0.24.0
+numpy>=1.26.4,<2.0
+Pillow>=10.4.0
+PyYAML>=6.0.2
+timm>=1.0.20
+opencv-python-headless>=4.10.0.84
+tqdm>=4.67.1
+matplotlib>=3.8.0
+
+# Training / evaluation
+torchmetrics>=1.8.2
+lpips>=0.1.4
+piq>=0.8.0
+
+# Web application
+fastapi>=0.115.0,<1.0
+uvicorn[standard]>=0.30.0,<1.0
+python-multipart>=0.0.12,<1.0
+pillow-heif>=0.18.0
+
+# Monocular depth estimation
+depth_pro @ git+https://github.com/apple/ml-depth-pro.git@9efe5c1
