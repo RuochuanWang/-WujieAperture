@@ -1,0 +1,97 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101719">
+  <meta name="description" content="无界光圈——面向后期景深控制的计算摄影平台。拍摄已结束，光圈仍可选择。">
+  <title>无界光圈｜面向后期景深控制的计算摄影平台</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/aperture-mark.svg">
+  <link rel="shortcut icon" href="/assets/aperture-mark.svg">
+  <link rel="preload" as="image" href="/assets/showcase/100-f16.0.png">
+  <link rel="stylesheet" href="/assets/wujie-aperture.css">
+  <link rel="stylesheet" href="/assets/home.css">
+  <script src="/assets/site.js" defer></script>
+  <script src="/assets/home.js" defer></script>
+</head>
+<body class="home-page">
+  <a class="skip-link" href="#main">跳至主要内容</a>
+  <header class="site-header home-header">
+    <a class="brand" href="/" aria-label="无界光圈首页"><span class="brand-mark" aria-hidden="true"></span><strong>无界光圈</strong></a>
+    <nav id="site-navigation" aria-label="主导航">
+      <a href="/" class="is-active" aria-current="page">首页</a>
+      <a href="/studio">工作台</a>
+      <a href="/deploy">部署教程</a>
+      <a href="/research">论文与方法</a>
+    </nav>
+    <div class="header-actions">
+      <a class="header-studio" href="/studio">开始创作 <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false">菜单</button>
+    </div>
+  </header>
+  <main id="main">
+    <section class="home-hero" aria-labelledby="heroTitle">
+      <div class="hero-visual" role="img" aria-label="编号100的同一张照片，依次展示 f/16、f/8、f/5.6、f/4、f/2.8、f/1.8 的景深变化并往返循环">
+        <img class="hero-frame" src="/assets/showcase/100-f16.0.png" alt="" fetchpriority="high" draggable="false" data-f="16.0">
+        <img class="hero-frame" src="/assets/showcase/100-f8.0.png" alt="" draggable="false" data-f="8.0">
+        <img class="hero-frame" src="/assets/showcase/100-f5.6.png" alt="" draggable="false" data-f="5.6">
+        <img class="hero-frame" src="/assets/showcase/100-f4.0.png" alt="" draggable="false" data-f="4.0">
+        <img class="hero-frame" src="/assets/showcase/100-f2.8.png" alt="" draggable="false" data-f="2.8">
+        <img class="hero-frame" src="/assets/showcase/100-f1.8.png" alt="" draggable="false" data-f="1.8">
+      </div>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-copy">
+          <p class="hero-kicker">无界光圈 <span aria-hidden="true">/</span> 可控景深</p>
+          <h1 id="heroTitle">拍摄已结束，<br>光圈仍可选择。</h1>
+          <p class="hero-subtitle">面向后期景深控制的计算摄影平台。<br>从一张照片出发，重新决定画面的焦点与景深。</p>
+          <div class="hero-actions">
+            <a class="hero-primary" href="/studio">进入工作台 <span aria-hidden="true">↗</span></a>
+            <a class="hero-secondary" href="/research">了解方法 <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-instrument" aria-label="编号100光圈序列循环演示">
+        <div class="instrument-name"><span class="instrument-mark" aria-hidden="true"></span><span>编号 100 / 六档光圈</span></div>
+        <div class="aperture-scale" id="apertureScale" role="img" aria-label="光圈刻度从左到右为 f/1.8、f/2.8、f/4.0、f/5.6、f/8.0、f/16.0，光标随景深在两端往返">
+          <div class="scale-track" aria-hidden="true"><span id="apertureCursor" class="scale-cursor"></span></div>
+          <div class="scale-ticks" aria-hidden="true">
+            <span class="scale-tick" data-frame="5"><i></i>f/1.8</span>
+            <span class="scale-tick" data-frame="4"><i></i>f/2.8</span>
+            <span class="scale-tick" data-frame="3"><i></i>f/4.0</span>
+            <span class="scale-tick" data-frame="2"><i></i>f/5.6</span>
+            <span class="scale-tick" data-frame="1"><i></i>f/8.0</span>
+            <span class="scale-tick" data-frame="0"><i></i>f/16.0</span>
+          </div>
+        </div>
+        <button id="heroMotionToggle" class="motion-toggle" type="button" aria-pressed="false">暂停演示</button>
+      </div>
+    </section>
+    <section class="proof-section home-container" aria-labelledby="proofTitle">
+      <div class="proof-intro">
+        <h2 id="proofTitle">一张照片，<br>六档光圈。</h2>
+        <p>焦点留在人物身上，让背景的空间层次随光圈改变。首屏按六档光圈往返演示，这里可以拖动比较两端。</p>
+      </div>
+      <figure class="hero-proof">
+        <div class="comparison-labels"><span>f/16.0</span><span>f/1.8</span></div>
+        <div class="home-comparison" id="homeComparison">
+          <img src="/assets/showcase/100-f1.8.png" alt="编号100照片的 f/1.8 浅景深结果" draggable="false">
+          <img class="comparison-original" src="/assets/showcase/100-f16.0.png" alt="编号100照片的 f/16.0 深景深画面" draggable="false">
+          <div class="home-divider" aria-hidden="true"><span>对比</span></div>
+          <input id="homeCompareRange" type="range" min="0" max="100" value="50" aria-label="拖动比较编号100照片的 f/16.0 与 f/1.8 画面">
+        </div>
+        <figcaption>编号 100 的同一画面；首屏在相邻光圈照片间线性渐变。</figcaption>
+      </figure>
+    </section>
+    <section class="principles-section home-container" aria-label="核心优势">
+      <div class="principles-heading"><h2>让景深成为<br>创作选择。</h2><a href="/studio">在工作台试一张照片 <span aria-hidden="true">↗</span></a></div>
+      <div class="benefits">
+        <article><h3>拍后光圈，连续可控</h3><p>在同一焦平面下调整等效光圈，探索从浅景深到深景深的不同表达。</p></article>
+        <article><h3>本地闭环，素材不出域</h3><p>在本机完成图像处理。原图与中间深度默认在运行内存中处理。</p></article>
+        <article><h3>方法可查，过程可见</h3><p>查看深度估计、目标焦平面和显式光圈渲染的工作方式。<a href="/research">阅读论文与方法</a></p></article>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer home-footer"><a class="brand" href="/"><strong>无界光圈</strong></a><p>面向后期景深控制的计算摄影平台</p><a href="/deploy">本地部署</a><a href="/research">论文与方法</a></footer>
+</body>
+</html>
