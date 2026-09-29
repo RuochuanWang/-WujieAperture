@@ -1,0 +1,222 @@
+experiment_name: explicit_coc_resflow_vatd_physical_v3_radiance
+
+root: ../VATD
+dataset_layout: vatd
+train_split: train
+val_split: test
+
+size: small
+num_workers: 4
+corrector_use_checkpoints: true
+
+focal_length: 1.0
+base_scale: 56.0
+max_radius: 24.0
+num_bins: 12
+renderer_kernel: disk
+renderer_padding: reflect
+renderer_mode: layered
+renderer_linear_light: false
+renderer_depth_layers: 12
+acceptable_coc_radius: 0.0
+coc_transition_width: 0.0
+depth_guidance_enabled: false
+depth_guidance_iterations: 2
+depth_guidance_color_sigma: 0.10
+depth_guidance_depth_sigma: 0.06
+depth_guidance_blend: 0.65
+layered_radius_interpolation: true
+layered_coverage_mode: normalize
+highlight_recovery_strength: 0.0
+highlight_recovery_threshold: 0.70
+highlight_recovery_gamma: 2.0
+radiance_weighting_strength: 12.0
+radiance_weighting_kernel: 15
+radiance_weighting_threshold: 0.10
+radiance_weighting_gamma: 1.0
+focus_mode: center_trimmed_median
+focus_patch_ratio: 0.25
+trim_ratio: 0.10
+inverse_depth_floor: 1.0
+depth_representation: inverse_like
+learnable_kappa: true
+learnable_focus_bias: false
+learnable_source_strength: false
+source_f_number: 16.0
+source_strength_init: 0.0625
+require_positive_radius_all_apertures: true
+
+repair_prior_alpha: 4.0
+repair_prior_beta: 2.0
+repair_prior_gamma: 0.5
+repair_prior_eta: 1.0
+repair_prior_tau: 2.5
+repair_prior_learnable_core: false
+repair_prior_normalize_grad: false
+repair_prior_aperture_aware: true
+
+unified_photometric_calibration_enabled: true
+unified_photometric_hidden_chans: 64
+unified_photometric_max_log_gain: 0.20
+unified_photometric_max_bias: 0.10
+
+lambda_coarse: 0.10
+lambda_rec: 1.0
+lambda_fm: 0.10
+lambda_endpoint: 0.30
+lambda_mse: 1.0
+lambda_ssim: 0.20
+lambda_gate: 0.004
+lambda_gate_sup: 0.05
+lambda_preserve: 0.015
+lambda_affine: 0.15
+lambda_photo: 0.001
+gate_target_threshold: 0.03
+gate_target_quantile: 0.0
+gate_target_kernel_size: 5
+affine_teacher_max_log_gain: 0.20
+affine_teacher_max_bias: 0.10
+ssim_max_size: 512
+
+use_softmask_for_rec: false
+use_mask_for_rec: false
+aperture_sampling_weights:
+  1.8: 1.00
+  2.8: 1.00
+  8.0: 1.00
+
+optimizer: adamw
+betas: [0.9, 0.99]
+weight_decay: 1.0e-4
+grad_clip: 1.0
+amp_enabled: true
+amp_dtype: bfloat16
+scheduler: cosine
+min_lr: 1.0e-6
+warmup_epochs: 1
+accum_steps: 1
+
+bound_residual_proposal: true
+residual_proposal_scale: 1.0
+corrector_gate_bias: -0.5
+use_coc_modulation: true
+coc_condition_chans: 2
+coc_mod_hidden_chans: 16
+use_time_modulation: true
+time_mod_hidden_chans: 64
+use_prior_gate: true
+prior_gate_lambda: 0.50
+use_aperture_gate: true
+aperture_gate_init_offset: -1.02
+aperture_gate_init_slope: 3.55
+flow_use_bridge_noise: true
+flow_zero_prob: 0.5
+flow_noise_std: 0.02
+fail_on_nonfinite: true
+
+ema_enabled: true
+ema_decay: 0.999
+ema_start_epoch: 3
+val_crop_max_samples: 120
+val_full_max_samples: 0
+val_full_every: 2
+
+seed: 42
+save_dir: experiments
+resume: ""
+init_checkpoint: ""
+
+stages:
+  - name: s0_384
+    epochs: 6
+    batch_size: 4
+    crop_h: 384
+    crop_w: 384
+    lambda_coarse: 0.25
+    lambda_fm: 0.05
+    lambda_endpoint: 0.15
+    lambda_mse: 0.50
+    lambda_ssim: 0.15
+    ssim_max_size: 384
+    lambda_gate: 0.008
+    lambda_gate_sup: 0.05
+    lambda_preserve: 0.03
+    lambda_affine: 0.15
+    lr: 1.2e-4
+    min_lr: 3.0e-5
+    warmup_epochs: 1
+    accum_steps: 1
+    print_every: 25
+    vis_every: 200
+    ckpt_every: 500
+
+  - name: s1_512
+    epochs: 7
+    batch_size: 2
+    crop_h: 512
+    crop_w: 512
+    lambda_coarse: 0.15
+    lambda_fm: 0.08
+    lambda_endpoint: 0.25
+    lambda_mse: 0.75
+    lambda_ssim: 0.20
+    ssim_max_size: 512
+    lambda_gate: 0.005
+    lambda_gate_sup: 0.05
+    lambda_preserve: 0.02
+    lambda_affine: 0.15
+    lr: 7.0e-5
+    min_lr: 1.5e-5
+    warmup_epochs: 1
+    accum_steps: 1
+    print_every: 50
+    vis_every: 400
+    ckpt_every: 1000
+
+  - name: s2_768
+    epochs: 14
+    batch_size: 1
+    crop_h: 768
+    crop_w: 768
+    lambda_coarse: 0.08
+    lambda_fm: 0.12
+    lambda_endpoint: 0.35
+    lambda_mse: 1.25
+    lambda_ssim: 0.30
+    ssim_max_size: 768
+    lambda_gate: 0.003
+    lambda_gate_sup: 0.05
+    lambda_preserve: 0.01
+    lambda_affine: 0.12
+    lr: 4.0e-5
+    min_lr: 6.0e-6
+    warmup_epochs: 1
+    accum_steps: 2
+    print_every: 100
+    vis_every: 800
+    ckpt_every: 2000
+
+  - name: s3_1024
+    epochs: 16
+    batch_size: 1
+    crop_h: 1024
+    crop_w: 1024
+    lambda_coarse: 0.04
+    lambda_fm: 0.12
+    lambda_endpoint: 0.35
+    lambda_mse: 1.50
+    lambda_ssim: 0.35
+    ssim_max_size: 1024
+    lambda_gate: 0.003
+    lambda_gate_sup: 0.05
+    lambda_preserve: 0.01
+    lambda_affine: 0.10
+    lr: 2.0e-5
+    min_lr: 1.0e-6
+    warmup_epochs: 1
+    accum_steps: 2
+    val_crop_max_samples: 60
+    val_full_every: 1
+    print_every: 100
+    vis_every: 800
+    ckpt_every: 2000
